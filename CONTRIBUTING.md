@@ -1,7 +1,7 @@
 # Contributing to Stacklok RFCs <!-- omit from toc -->
 
-First off, thank you for taking the time to contribute to ToolHive! :+1: :tada:
-ToolHive is released under the Apache 2.0 license. If you would like to
+First off, thank you for taking the time to contribute to Stacklok projects! :+1: :tada:
+This repository is released under the Apache 2.0 license. If you would like to
 contribute an RFC or want to participate in the design process, this document
 should help you get started.
 
@@ -27,7 +27,7 @@ report unacceptable behavior to
 
 ## Reporting security vulnerabilities
 
-If you think you have found a security vulnerability in any ToolHive project,
+If you think you have found a security vulnerability in any Stacklok project,
 please DO NOT disclose it publicly until we've had a chance to fix it. Please
 don't report security vulnerabilities using GitHub issues; instead, please
 follow this
@@ -48,8 +48,8 @@ RFC, start a thread first.
 GitHub Issues in this repository are used to track RFC status and any
 meta-discussions about the RFC process itself.
 
-For general usage questions about ToolHive, please ask in
-[ToolHive's discussion forum](https://discord.gg/stacklok).
+For general usage questions about our projects, please ask in
+[our discussion forum](https://discord.gg/stacklok).
 
 ### Not sure how to start contributing?
 
@@ -68,7 +68,7 @@ If you're new to the RFC process:
    - Fork this repository to your own GitHub account
    - Copy `template.md` to `<project>/<PREFIX>-XXXX-descriptive-name.md`
      (e.g. `toolhive/THV-XXXX-descriptive-name.md`)
-   - Use the next available RFC number (check existing RFCs)
+   - Keep `XXXX` as a placeholder while drafting, then rename the file to your PR number once the PR is open
    - Fill in all required sections of the template
 
 3. **Submit a Pull Request**:

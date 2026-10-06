@@ -849,11 +849,11 @@ The `thv vmcp` subcommand introduces no new attack surface beyond what the stand
 
 ## References
 
-- [THV-0022: Optimizer Migration to vMCP](https://github.com/stacklok/toolhive-rfcs/blob/main/rfcs/THV-0022-optimizer-migration-to-vmcp.md) — Optimizer architecture (SQLite FTS5, TEI embeddings, session-scoped indexing)
-- [THV-0008: Virtual MCP Server](https://github.com/stacklok/toolhive-rfcs/blob/main/rfcs/THV-0008-virtual-mcp-server.md) — Original vMCP design
-- [THV-0014: K8s-Aware vMCP with Dynamic Backend Discovery](https://github.com/stacklok/toolhive-rfcs/blob/main/rfcs/THV-0014-vmcp-k8s-aware-refactor.md) — K8s discovery mode
-- [THV-0034: Local Long-Running Server Architecture](https://github.com/stacklok/toolhive-rfcs/blob/main/rfcs/THV-0034-long-running-local-server.md) — Future integration point
-- [THV-0047: vMCP/ProxyRunner Horizontal Scaling](https://github.com/stacklok/toolhive-rfcs/blob/main/rfcs/THV-0047-vmcp-proxyrunner-horizontal-scaling.md) — Scaling considerations
+- [THV-0022: Optimizer Migration to vMCP](THV-0022-optimizer-migration-to-vmcp.md) — Optimizer architecture (SQLite FTS5, TEI embeddings, session-scoped indexing)
+- [THV-0008: Virtual MCP Server](THV-0008-virtual-mcp-server.md) — Original vMCP design
+- [THV-0014: K8s-Aware vMCP with Dynamic Backend Discovery](THV-0014-vmcp-k8s-aware-refactor.md) — K8s discovery mode
+- [THV-0034: Local Long-Running Server Architecture](THV-0034-long-running-local-server.md) — Future integration point
+- [THV-0047: vMCP/ProxyRunner Horizontal Scaling](THV-0047-vmcp-proxyrunner-horizontal-scaling.md) — Scaling considerations
 - [brood-box vMCP integration](https://github.com/stacklok/brood-box/tree/main/internal/infra/mcp) — Reference implementation of library embedding pattern
 - [ToolHive vMCP architecture docs](https://github.com/stacklok/toolhive/blob/main/docs/arch/10-virtual-mcp-architecture.md) — Architecture documentation
 - [vMCP package documentation](https://github.com/stacklok/toolhive/blob/main/pkg/vmcp/doc.go) — Package-level docs

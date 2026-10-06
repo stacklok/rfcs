@@ -14,7 +14,7 @@ You should write an RFC for:
 - Significant architectural changes
 - Changes that affect the public API or user-facing behavior
 - Security-sensitive changes
-- Cross-cutting concerns that span multiple ToolHive projects
+- Cross-cutting concerns that span multiple projects or repositories
 - Breaking changes or deprecations
 
 You probably **don't** need an RFC for:
@@ -31,8 +31,8 @@ Each project has its own folder, filename prefix and `AGENTS.md` describing its 
 
 | Project | Folder | Prefix |
 |---------|--------|--------|
-| ToolHive ecosystem | [`toolhive/`](toolhive/AGENTS.md) | `THV-` |
-| Mecatl | [`mecatl/`](mecatl/AGENTS.md) | `MEC-` |
+| ToolHive ecosystem | [`toolhive/`](toolhive/AGENTS.md) | `THV` |
+| Mecatl | [`mecatl/`](mecatl/AGENTS.md) | `MEC` |
 
 To onboard a new project, see [Adding a project](AGENTS.md#adding-a-project) in the root `AGENTS.md`.
 
@@ -46,7 +46,7 @@ Before writing a full RFC, consider opening a thread on [Discord](https://discor
 
 1. Fork this repository
 2. Copy `template.md` to `<project>/<PREFIX>-XXXX-descriptive-name.md` (e.g. `toolhive/THV-XXXX-descriptive-name.md`)
-   - Use the next available Pull Request number for your RFC (check existing RFCs)
+   - Keep `XXXX` as a placeholder while drafting, then rename the file to the number of your Pull Request once it is open
    - Use a short, descriptive name with hyphens
 3. Fill in the RFC template
 4. Submit a Pull Request
@@ -63,8 +63,8 @@ Before writing a full RFC, consider opening a thread on [Discord](https://discor
 RFCs can be:
 - **Accepted**: The RFC is approved and can be implemented
 - **Rejected**: The RFC is not approved (with explanation)
-- **Postponed**: The RFC is deferred for future consideration
-- **Withdrawn**: The author withdraws the RFC
+- **Superseded**: A newer RFC replaces it
+- **Implemented**: The accepted RFC has been implemented
 
 ### 5. Implementation
 
@@ -75,7 +75,7 @@ Once accepted, the RFC can be implemented. The RFC should be updated with:
 
 ## RFC Numbering
 
-RFCs are numbered based on the PR numbers, so they are incremental, but not necessarily sequential (0001, 0002, 0004, etc.). The number sequence is shared across all projects; only the prefix differs. When creating a new RFC, check the existing RFCs and use the next available number. A CI task will ensure you're using the right number.
+RFCs are numbered based on the PR numbers, so they are incremental, but not necessarily sequential (0001, 0002, 0004, etc.). The number sequence is shared across all projects; only the prefix differs. Draft with `XXXX` and rename the file to your PR number once the PR is open. A CI task will ensure you're using the right number.
 
 For RFCs that originate from issues in specific repositories, you may reference the issue number in the RFC (e.g., "This RFC addresses toolhive#1234").
 
@@ -90,8 +90,9 @@ rfcs/
 ├── toolhive/                    # One folder per project
 │   ├── AGENTS.md                # Project scope, repositories and conventions
 │   └── THV-XXXX-*.md            # RFCs, prefixed per project
-└── assets/                      # Images and diagrams for RFCs
-    └── XXXX/                    # Assets for RFC XXXX
+└── mecatl/
+    ├── AGENTS.md
+    └── MEC-XXXX-*.md
 ```
 
 ## License

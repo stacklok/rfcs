@@ -8,7 +8,7 @@
 - **Related Issues**:
   - [toolhive#3986](https://github.com/stacklok/toolhive/pull/3986) - Enable sticky sessions on operator-created Services
   - [toolhive#3992](https://github.com/stacklok/toolhive/pull/3992) - Add ClusterIP service with SessionAffinity for MCP server backend
-  - [THV-0038](https://github.com/stacklok/toolhive-rfcs/blob/main/rfcs/THV-0038-session-scoped-client-lifecycle.md) - Session-Scoped Client Lifecycle for vMCP
+  - [THV-0038](THV-0038-session-scoped-client-lifecycle.md) - Session-Scoped Client Lifecycle for vMCP
   - [toolhive#1589](https://github.com/stacklok/toolhive/issues/1589) - Scaling stdio within k8s.
 
 ## Summary
@@ -76,7 +76,7 @@ Today, only `LocalStorage` (in-process memory map) is implemented. The `Storage`
 
 #### vMCP Session-Scoped Architecture (THV-0038)
 
-[THV-0038](https://github.com/stacklok/toolhive-rfcs/blob/main/rfcs/THV-0038-session-scoped-client-lifecycle.md) refactored vMCP's session management to introduce explicit session lifecycle: backend HTTP clients are created once at session initialization, reused for all requests within the session, and closed on expiry. The resulting `MultiSession` interface owns the routing table for that session (which tool belongs to which backend), as well as live backend connections.
+[THV-0038](THV-0038-session-scoped-client-lifecycle.md) refactored vMCP's session management to introduce explicit session lifecycle: backend HTTP clients are created once at session initialization, reused for all requests within the session, and closed on expiry. The resulting `MultiSession` interface owns the routing table for that session (which tool belongs to which backend), as well as live backend connections.
 
 The `session.go` documentation in the codebase is explicit about the distributed scaling trade-off:
 
@@ -194,7 +194,7 @@ For `SSE` and `streamable-http`, the session exists as a logical identifier (`Mc
 - **`stdio` transport scaling**: The proxyrunner's attachment to the MCP container's stdin/stdout is inherently single-process. Horizontal scaling of stdio-backed servers requires re-initializing the container session and is out of scope for this RFC.
 - **Smart Routing at vMCP**: We've previously discussed having vMCP route requests to the same underlying proxyrunner that's previously serviced the session. While this may be useful long term to reduce Redis load and reduce latency, it's not strictly necessary in the short term. vMCP will continue to send requests through k8s Service associated with the proxyrunner.
 - **One StatefulSet per MCPServer (shared)**: The design maintains exactly one StatefulSet per `MCPServer`. All proxyrunner replicas for a given `MCPServer` share that single StatefulSet, converging on the same spec via server-side apply. Each proxyrunner replica routes its sessions to specific pods within the shared StatefulSet. Note: a 1:1 ratio (one StatefulSet per proxyrunner replica) could be a future direction if enabling `stdio` horizontal scaling were desired, since each proxyrunner would then have its own dedicated backend.
-- **Moving MCP server deployment out of the proxyrunner**: The proxyrunner remains responsible for creating, managing, and proxying to the MCP server StatefulSet. Changing this responsibility boundary (e.g., having vMCP manage backends directly) is desirable long-term but is more work and out of scope. Discussed in detail [here](https://github.com/stacklok/toolhive-rfcs/blob/main/rfcs/THV-0003-toolhive-kubernetes-architecture-improvement.md).
+- **Moving MCP server deployment out of the proxyrunner**: The proxyrunner remains responsible for creating, managing, and proxying to the MCP server StatefulSet. Changing this responsibility boundary (e.g., having vMCP manage backends directly) is desirable long-term but is more work and out of scope. Discussed in detail [here](THV-0003-toolhive-kubernetes-architecture-improvement.md).
 - **Auto-scaling policy**: How to trigger scale-out (HPA metrics, KEDA event sources, custom metrics) is deferred to a follow-on RFC. This RFC makes auto-scaling possible; it does not specify when or how to do it.
 - **Backend StatefulSet scale-in**: Removing pods from the `MCPServer` StatefulSet (reducing `spec.backendReplicas`) is always disruptive — the backend session state lives in the removed process and cannot be reconstructed. Graceful drain of backend pods is out of scope for this RFC.
 - **Scalable SSE elicitation and sampling**: Both SSE and Streamable HTTP transports can use server-sent event streams to deliver server-to-client requests (elicitation, sampling) mid-flight. These long-lived streams are pinned to a specific pod, so scaling them would require intra-deployment routing to forward client response POSTs to the pod holding the open stream. This adds significant complexity for a pattern most deployments do not use. The MCP spec is evolving toward stateless-friendly alternatives (tasks, reconnectable streams) that may mitigate this; until then, we flag it as a known gap and candidate for future work.

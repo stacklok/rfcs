@@ -111,4 +111,4 @@ Before finalizing, verify:
 - Project rules: `<project>/AGENTS.md`
 - Template: `template.md`
 - Contributing guide: `CONTRIBUTING.md`
-- Existing RFCs: `<project>/*.md`
+- Existing RFCs: `<project>/<PREFIX>-*.md`

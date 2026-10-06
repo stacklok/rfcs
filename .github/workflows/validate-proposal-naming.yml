@@ -32,7 +32,7 @@ jobs:
             echo "Using PR number from manual input: $(printf %04d ${{ inputs.pr_number }})"
           else
             echo "PR_NUMBER=$(printf %04d ${{ github.event.number }})" >> $GITHUB_ENV
-            echo "Using PR number from event: $(printf %04d ${{ inputs.pr_number }})"
+            echo "Using PR number from event: $(printf %04d ${{ github.event.number }})"
           fi
 
       - name: Validate proposal naming
@@ -44,8 +44,8 @@ jobs:
           )
 
           # Get the list of NEW files added in a project folder (not modifications to existing files).
-          # Only top-level project folders are considered; READMEs are not RFCs.
-          CHANGED_FILES=$(git diff --name-only --diff-filter=A origin/${{ github.base_ref }}...HEAD | grep -E '^[^./][^/]*/[^/]+\.md$' | grep -vE '/README\.md$' || true)
+          # Only top-level project folders are considered; README.md, AGENTS.md and CLAUDE.md are not RFCs.
+          CHANGED_FILES=$(git diff --name-only --diff-filter=A origin/${{ github.base_ref }}...HEAD | grep -E '^[^./][^/]*/[^/]+\.md$' | grep -vE '/(README|AGENTS|CLAUDE)\.md$' || true)
 
           # Skip validation if no new proposal files are being added
           # (modifications to existing proposals don't need naming validation)

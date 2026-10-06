@@ -65,12 +65,13 @@ Transport types: **stdio** (needs protocol translation), **SSE** and **streamabl
 1. **Platform, not runner**: enhances the platform abstraction.
 2. **Security by default**: maintains or improves the security posture.
 3. **Middleware composability**: implemented as middleware where appropriate.
-4. **RunConfig portability**: keeps configuration portable (RunConfig is the portable API contract).
-5. **Cloud-native**: Kubernetes-friendly where applicable.
+4. **Extensibility**: new cross-cutting behavior fits the middleware model.
+5. **RunConfig portability**: keeps configuration portable (RunConfig is the portable API contract).
+6. **Cloud-native**: Kubernetes-friendly where applicable.
 
 ## Conventions
 
 - Code examples: **Go** for toolhive and toolhive-registry-server, **TypeScript** for toolhive-studio and toolhive-cloud-ui, **YAML** for configuration.
-- Kubernetes RFCs include CRD examples (`apiVersion: toolhive.stacklok.dev/v1alpha1`). CRD types: `MCPServer`, `MCPRegistry`, `MCPToolConfig`, `MCPExternalAuthConfig`, `MCPGroup`, `VirtualMCPServer`. Follow Kubernetes API conventions.
+- Kubernetes RFCs include CRD examples (`apiVersion: toolhive.stacklok.dev/v1alpha1`). CRD types: `MCPServer` (individual server deployment), `MCPRegistry` (registry configuration), `MCPToolConfig` (tool filtering and configuration), `MCPExternalAuthConfig` (external authentication), `MCPGroup` (server grouping), `VirtualMCPServer` (aggregation of multiple servers). Follow Kubernetes API conventions.
 - Use ToolHive terminology correctly (Workloads, Transports, Middleware, RunConfig, ...).
 - API and configuration designs stay consistent with existing APIs and RunConfig patterns in the target repository.
