@@ -4,7 +4,7 @@
 - **Author(s)**: Your Name (@github-handle)
 - **Created**: YYYY-MM-DD
 - **Last Updated**: YYYY-MM-DD
-- **Target Repository**: toolhive | toolhive-studio | toolhive-registry | toolhive-registry-server | multiple
+- **Target Repository**: the repository this RFC targets (e.g. toolhive, toolhive-studio, toolhive-registry-server) | multiple
 - **Related Issues**: [toolhive#1234](https://github.com/stacklok/toolhive/issues/1234) (if applicable)
 
 ## Summary

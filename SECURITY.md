@@ -20,7 +20,7 @@ the appropriate repository:
 
 If you discover a security issue in an RFC design that could lead to
 vulnerabilities in implementations, please use the GitHub Security Advisory
-["Report a Vulnerability"](https://github.com/stacklok/toolhive-rfcs/security/advisories/new)
+["Report a Vulnerability"](https://github.com/stacklok/rfcs/security/advisories/new)
 tab.
 
 If you are unable to access GitHub you can also email us at

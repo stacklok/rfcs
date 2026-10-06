@@ -1,4 +1,4 @@
-# Contributing to ToolHive RFCs <!-- omit from toc -->
+# Contributing to Stacklok RFCs <!-- omit from toc -->
 
 First off, thank you for taking the time to contribute to ToolHive! :+1: :tada:
 ToolHive is released under the Apache 2.0 license. If you would like to
@@ -57,7 +57,7 @@ If you're new to the RFC process:
 
 1. Read through existing RFCs to understand the format and level of detail expected
 2. Start with a thread on [Discord](https://discord.gg/stacklok) to validate your idea
-3. Review the [RFC template](rfcs/0000-template.md) to understand what sections are required
+3. Review the [RFC template](template.md) to understand what sections are required
 
 ### RFC submission process
 
@@ -66,7 +66,8 @@ If you're new to the RFC process:
 
 2. **Fork and create your RFC**:
    - Fork this repository to your own GitHub account
-   - Copy `rfcs/0000-template.md` to `rfcs/THV-XXXX-descriptive-name.md`
+   - Copy `template.md` to `<project>/<PREFIX>-XXXX-descriptive-name.md`
+     (e.g. `toolhive/THV-XXXX-descriptive-name.md`)
    - Use the next available RFC number (check existing RFCs)
    - Fill in all required sections of the template
 
@@ -92,17 +93,19 @@ If you're new to the RFC process:
 All RFC files must follow this naming pattern:
 
 ```
-THV-{NUMBER}-{descriptive-name}.md
+{project}/{PREFIX}-{NUMBER}-{descriptive-name}.md
 ```
 
 Where:
+- `{project}` is the project folder (e.g. `toolhive`)
+- `{PREFIX}` is that project's prefix (e.g. `THV`), listed in the [README](README.md#projects)
 - `{NUMBER}` is a four-digit sequential number that must be equal to the PR number (e.g., 0001, 0002)
 - `{descriptive-name}` is a short description in kebab-case
 
 #### Examples of valid RFC names:
-- `THV-0001-token-exchange-middleware.md`
-- `THV-0002-kubernetes-crd-improvements.md`
-- `THV-0003-registry-api-v2.md`
+- `toolhive/THV-0001-token-exchange-middleware.md`
+- `toolhive/THV-0002-kubernetes-crd-improvements.md`
+- `toolhive/THV-0003-registry-api-v2.md`
 
 A CI job will make sure you're following the right numbering.
 
