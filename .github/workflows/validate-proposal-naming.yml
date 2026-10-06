@@ -5,7 +5,7 @@ permissions:
 on:
   pull_request:
     paths:
-      - 'rfcs/**'
+      - '*/**'
     types: [opened, synchronize]
   workflow_dispatch:
     inputs:
@@ -32,13 +32,20 @@ jobs:
             echo "Using PR number from manual input: $(printf %04d ${{ inputs.pr_number }})"
           else
             echo "PR_NUMBER=$(printf %04d ${{ github.event.number }})" >> $GITHUB_ENV
-            echo "Using PR number from event: $(printf %04d ${{ inputs.pr_number }})"
+            echo "Using PR number from event: $(printf %04d ${{ github.event.number }})"
           fi
 
       - name: Validate proposal naming
         run: |
-          # Get the list of NEW files added in rfcs/ (not modifications to existing files)
-          CHANGED_FILES=$(git diff --name-only --diff-filter=A origin/${{ github.base_ref }}...HEAD | grep '^rfcs/' || true)
+          # Map of project folder -> RFC filename prefix. Add a line here when onboarding a new project.
+          declare -A PREFIXES=(
+            [toolhive]="THV"
+            [mecatl]="MEC"
+          )
+
+          # Get the list of NEW files added in a project folder (not modifications to existing files).
+          # Only top-level project folders are considered; README.md, AGENTS.md and CLAUDE.md are not RFCs.
+          CHANGED_FILES=$(git diff --name-only --diff-filter=A origin/${{ github.base_ref }}...HEAD | grep -E '^[^./][^/]*/[^/]+\.md$' | grep -vE '/(README|AGENTS|CLAUDE)\.md$' || true)
 
           # Skip validation if no new proposal files are being added
           # (modifications to existing proposals don't need naming validation)
@@ -57,14 +64,24 @@ jobs:
           while IFS= read -r file; do
             if [ -n "$file" ] && [ -f "$file" ]; then
               filename=$(basename "$file")
-              echo "Checking file: $filename"
+              project=$(dirname "$file")
+              echo "Checking file: $file"
 
-              # Check if the filename follows the THV-####-name pattern with the current PR number
-              if echo "$filename" | grep -qE "^THV-${PR_NUMBER}-.*\.md$"; then
+              prefix="${PREFIXES[$project]:-}"
+              if [ -z "$prefix" ]; then
+                echo "❌ '$project' is not a registered project folder"
+                echo "   Registered projects: ${!PREFIXES[*]}"
+                echo "   Add it to the PREFIXES map in this workflow."
+                VALIDATION_FAILED=true
+                continue
+              fi
+
+              # Check if the filename follows the <PREFIX>-####-name pattern with the current PR number
+              if echo "$filename" | grep -qE "^${prefix}-${PR_NUMBER}-.*\.md$"; then
                 echo "✅ $filename follows the correct naming convention"
               else
                 echo "❌ $filename does not follow the correct naming convention"
-                echo "   Expected format: THV-${PR_NUMBER}-name-of-your-proposal.md"
+                echo "   Expected format: ${project}/${prefix}-${PR_NUMBER}-name-of-your-proposal.md"
                 echo "   Where ${PR_NUMBER} is the current PR number"
                 VALIDATION_FAILED=true
               fi
@@ -77,16 +94,17 @@ jobs:
             echo "❌ Validation failed! Some proposal files do not follow the naming convention."
             echo ""
             echo "Proposal files must follow this naming pattern:"
-            echo "  THV-${PR_NUMBER}-name-of-your-proposal.md"
+            echo "  <project>/<PREFIX>-${PR_NUMBER}-name-of-your-proposal.md"
             echo ""
             echo "Where:"
-            echo "  - THV- is the prefix"
+            echo "  - <project> is the project folder (e.g. toolhive)"
+            echo "  - <PREFIX>- is that project's prefix (e.g. THV-)"
             echo "  - ${PR_NUMBER} is the current PR number"
             echo "  - name-of-your-proposal is a descriptive name in kebab-case"
             echo "  - .md is the file extension"
             echo ""
             echo "Example of valid name for this PR:"
-            echo "  - THV-${PR_NUMBER}-new-feature-proposal.md"
+            echo "  - toolhive/THV-${PR_NUMBER}-new-feature-proposal.md"
             echo ""
             exit 1
           else

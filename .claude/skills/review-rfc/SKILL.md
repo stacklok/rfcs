@@ -1,12 +1,12 @@
 ---
 name: review-rfc
-description: Review RFCs for the ToolHive ecosystem. Use when the user wants to review, critique, or provide feedback on an RFC for toolhive, toolhive-studio, toolhive-registry, toolhive-registry-server, toolhive-cloud-ui, or dockyard projects.
+description: Review RFCs for any project in this repository (toolhive, mecatl, ...). Use when the user wants to review, critique, or provide feedback on an RFC, including ones for the toolhive, toolhive-studio, toolhive-registry, toolhive-registry-server, toolhive-cloud-ui, or dockyard repositories.
 allowed-tools: Read, Glob, Grep, Bash(git:*), mcp__github__*, mcp__fetch__fetch, WebFetch, Task
 ---
 
 # Review RFC Skill
 
-This skill helps you thoroughly review RFCs for the ToolHive ecosystem, ensuring they meet quality standards, architectural alignment, and security requirements.
+This skill helps you thoroughly review RFCs for the projects in this repository, ensuring they meet quality standards, architectural alignment, and security requirements.
 
 ## Overview
 
@@ -18,27 +18,13 @@ When reviewing an RFC, you should evaluate it against multiple dimensions: compl
 
 First, read the RFC document completely. If provided a PR number or file path, fetch and read it.
 
-### Step 2: Fetch Architectural Context
+### Step 2: Load Project Context
 
-Before reviewing, gather context from the ToolHive architecture documentation. Use `mcp__github__get_file_contents` to read relevant docs from `stacklok/toolhive` repo's `docs/arch/` directory:
-
-| Document | When to Read |
-|----------|--------------|
-| `00-overview.md` | Always - understand platform concepts |
-| `01-deployment-modes.md` | RFCs affecting deployment, K8s, or local mode |
-| `02-core-concepts.md` | RFCs introducing new concepts or terminology |
-| `03-transport-architecture.md` | RFCs affecting MCP transports or proxy |
-| `04-secrets-management.md` | RFCs involving secrets or credentials |
-| `05-runconfig-and-permissions.md` | RFCs affecting configuration or permissions |
-| `06-registry-system.md` | RFCs affecting registry functionality |
-| `07-groups.md` | RFCs involving server grouping |
-| `08-workloads-lifecycle.md` | RFCs affecting workload management |
-| `09-operator-architecture.md` | RFCs affecting K8s operator or CRDs |
-| `10-virtual-mcp-architecture.md` | RFCs involving aggregation or virtual MCP |
+Read the root `AGENTS.md`, then the `AGENTS.md` in the RFC's project folder. Use its "Research before writing or reviewing" section to fetch the architecture docs relevant to this RFC (for example with `mcp__github__get_file_contents`), and use its architecture summary, design principles and conventions as the standard to review against.
 
 ### Step 3: Check Related Existing RFCs
 
-Search this repository for related RFCs that might:
+Search the project folder for related RFCs that might:
 - Conflict with the proposal
 - Be superseded by the proposal
 - Provide context or dependencies
@@ -92,12 +78,11 @@ The Security Considerations section MUST address all of these:
 
 ### C. Technical Accuracy
 
-- [ ] **Correct terminology**: Uses ToolHive concepts correctly (Workloads, Transports, Middleware, etc.)
-- [ ] **Architecture alignment**: Follows established patterns and principles
+- [ ] **Correct terminology**: Uses the project's concepts correctly (see the project's `AGENTS.md`)
+- [ ] **Architecture alignment**: Follows the design principles in the project's `AGENTS.md`
 - [ ] **Code examples**: Syntactically correct, idiomatic for the language
 - [ ] **API design**: Consistent with existing APIs in the target repo
-- [ ] **CRD design**: Follows Kubernetes conventions if applicable
-- [ ] **Configuration format**: Matches existing RunConfig patterns
+- [ ] **Project conventions**: Follows the "Conventions" section of the project's `AGENTS.md` (CRDs, configuration formats, etc.)
 
 ### D. Diagrams and Examples
 
@@ -114,35 +99,9 @@ The Security Considerations section MUST address all of these:
 - [ ] **Performance impact**: Considered where relevant?
 - [ ] **Cross-repo impact**: If `multiple` repos, are all impacts identified?
 
-## ToolHive Ecosystem Context
+## Project Context
 
-### Target Repositories
-
-| Repository | Type | Key Considerations |
-|------------|------|-------------------|
-| `toolhive` | Go | Core platform, CLI, operator, proxy, virtual MCP |
-| `toolhive-studio` | TypeScript | Desktop UI, Electron app |
-| `toolhive-registry-server` | Go | Registry API, MCP Registry spec compliance |
-| `toolhive-registry` | Go/JSON | Registry data, server definitions |
-| `toolhive-cloud-ui` | TypeScript/Next.js | Cloud UI, OIDC integration |
-| `dockyard` | Go | Container packaging, security scanning |
-
-### Key Architecture Principles to Verify
-
-1. **Platform, not runner**: Does this enhance the platform abstraction?
-2. **Security by default**: Does this maintain or improve security posture?
-3. **Middleware composability**: Can this be implemented as middleware if appropriate?
-4. **RunConfig portability**: Does this preserve configuration portability?
-5. **Cloud-native**: Is this Kubernetes-friendly where applicable?
-
-### CRD Types (for K8s-related RFCs)
-
-- `MCPServer` - Individual MCP server deployment
-- `MCPRegistry` - Registry configuration
-- `MCPToolConfig` - Tool filtering and configuration
-- `MCPExternalAuthConfig` - External authentication
-- `MCPGroup` - Server grouping
-- `VirtualMCPServer` - Aggregation of multiple servers
+Target repositories, architecture principles to verify, and domain-specific checks (such as CRD types for Kubernetes RFCs) are defined per project in `<project>/AGENTS.md`. Verify the RFC against each design principle listed there.
 
 ## Review Output Format
 
@@ -172,7 +131,7 @@ Structure your review as follows:
 [Specific feedback on the security section]
 
 ### Architectural Alignment
-[How well does this align with ToolHive architecture?]
+[How well does this align with the project's architecture and design principles?]
 
 ### Questions for the Author
 - [Clarifying questions that need answers]
@@ -212,6 +171,8 @@ Structure your review as follows:
 
 ## Reference Files
 
-- Template: `rfcs/0000-template.md`
+- Shared rules: `AGENTS.md`
+- Project rules: `<project>/AGENTS.md`
+- Template: `template.md`
 - Contributing guide: `CONTRIBUTING.md`
-- Existing RFCs: `rfcs/THV-*.md`
+- Existing RFCs: `<project>/<PREFIX>-*.md`

@@ -1,10 +1,10 @@
-# ToolHive RFCs
+# RFCs
 
-This repository contains Requests for Comments (RFCs) for the ToolHive ecosystem. RFCs are design documents that describe significant changes, new features, or architectural decisions across any ToolHive project.
+This repository contains Requests for Comments (RFCs) for Stacklok projects, organized by project. RFCs are design documents that describe significant changes, new features, or architectural decisions.
 
 ## What is an RFC?
 
-An RFC (Request for Comments) is a design document that proposes a significant change to the ToolHive ecosystem. RFCs provide a consistent and controlled path for new features and changes to enter the project, ensuring that all stakeholders have an opportunity to provide feedback.
+An RFC (Request for Comments) is a design document that proposes a significant change to a project. RFCs provide a consistent and controlled path for new features and changes to enter the project, ensuring that all stakeholders have an opportunity to provide feedback.
 
 ## When to Write an RFC
 
@@ -14,7 +14,7 @@ You should write an RFC for:
 - Significant architectural changes
 - Changes that affect the public API or user-facing behavior
 - Security-sensitive changes
-- Cross-cutting concerns that span multiple ToolHive projects
+- Cross-cutting concerns that span multiple projects or repositories
 - Breaking changes or deprecations
 
 You probably **don't** need an RFC for:
@@ -25,17 +25,16 @@ You probably **don't** need an RFC for:
 - Performance improvements that don't change behavior
 - Changes isolated to a single component with no external impact
 
-## ToolHive Ecosystem
+## Projects
 
-This RFC repository serves the entire ToolHive ecosystem, including but not limited to:
+Each project has its own folder, filename prefix and `AGENTS.md` describing its scope, repositories and conventions. Because most RFCs are drafted with AI assistance, that file is where project guidelines live: AI tools read it automatically, and it is just as readable by people.
 
-| Repository | Description |
-|------------|-------------|
-| [toolhive](https://github.com/stacklok/toolhive) | Core ToolHive runtime and CLI |
-| [toolhive-studio](https://github.com/stacklok/toolhive-studio) | Desktop application for managing MCP servers |
-| [toolhive-registry](https://github.com/stacklok/toolhive-registry) | ToolHive's registry of MCP servers |
-| [toolhive-registry-server](https://github.com/stacklok/toolhive-registry-server) | API server implementing the MCP Registry API |
-| [toolhive-cloud-ui](https://github.com/stacklok/toolhive-cloud-ui) | Cloud UI for MCP servers |
+| Project | Folder | Prefix |
+|---------|--------|--------|
+| ToolHive ecosystem | [`toolhive/`](toolhive/AGENTS.md) | `THV` |
+| Mecatl | [`mecatl/`](mecatl/AGENTS.md) | `MEC` |
+
+To onboard a new project, see [Adding a project](AGENTS.md#adding-a-project) in the root `AGENTS.md`.
 
 ## RFC Process
 
@@ -46,8 +45,8 @@ Before writing a full RFC, consider opening a thread on [Discord](https://discor
 ### 2. Create the RFC
 
 1. Fork this repository
-2. Copy `rfcs/0000-template.md` to `rfcs/XXXX-descriptive-name.md`
-   - Use the next available Pull Request number for your RFC (check existing RFCs)
+2. Copy `template.md` to `<project>/<PREFIX>-XXXX-descriptive-name.md` (e.g. `toolhive/THV-XXXX-descriptive-name.md`)
+   - Keep `XXXX` as a placeholder while drafting, then rename the file to the number of your Pull Request once it is open
    - Use a short, descriptive name with hyphens
 3. Fill in the RFC template
 4. Submit a Pull Request
@@ -64,8 +63,8 @@ Before writing a full RFC, consider opening a thread on [Discord](https://discor
 RFCs can be:
 - **Accepted**: The RFC is approved and can be implemented
 - **Rejected**: The RFC is not approved (with explanation)
-- **Postponed**: The RFC is deferred for future consideration
-- **Withdrawn**: The author withdraws the RFC
+- **Superseded**: A newer RFC replaces it
+- **Implemented**: The accepted RFC has been implemented
 
 ### 5. Implementation
 
@@ -76,21 +75,24 @@ Once accepted, the RFC can be implemented. The RFC should be updated with:
 
 ## RFC Numbering
 
-RFCs are numbered based on the PR numbers, so they are incremental, but not necessarily sequential (0001, 0002, 0004, etc.). When creating a new RFC, check the existing RFCs and use the next available number. A CI task will ensure you're using the right number.
+RFCs are numbered based on the PR numbers, so they are incremental, but not necessarily sequential (0001, 0002, 0004, etc.). The number sequence is shared across all projects; only the prefix differs. Draft with `XXXX` and rename the file to your PR number once the PR is open. A CI task will ensure you're using the right number.
 
 For RFCs that originate from issues in specific repositories, you may reference the issue number in the RFC (e.g., "This RFC addresses toolhive#1234").
 
 ## Directory Structure
 
 ```
-toolhive-rfcs/
+rfcs/
 ├── README.md                    # This file
 ├── CONTRIBUTING.md              # Contribution guidelines
-├── rfcs/
-│   ├── 0000-template.md         # RFC template
-│   └── ...
-└── assets/                      # Images and diagrams for RFCs
-    └── XXXX/                    # Assets for RFC XXXX
+├── AGENTS.md                    # Shared rules for AI assistants and authors
+├── template.md                  # RFC template shared by all projects
+├── toolhive/                    # One folder per project
+│   ├── AGENTS.md                # Project scope, repositories and conventions
+│   └── THV-XXXX-*.md            # RFCs, prefixed per project
+└── mecatl/
+    ├── AGENTS.md
+    └── MEC-XXXX-*.md
 ```
 
 ## License

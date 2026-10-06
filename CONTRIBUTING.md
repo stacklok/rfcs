@@ -1,7 +1,7 @@
-# Contributing to ToolHive RFCs <!-- omit from toc -->
+# Contributing to Stacklok RFCs <!-- omit from toc -->
 
-First off, thank you for taking the time to contribute to ToolHive! :+1: :tada:
-ToolHive is released under the Apache 2.0 license. If you would like to
+First off, thank you for taking the time to contribute to Stacklok projects! :+1: :tada:
+This repository is released under the Apache 2.0 license. If you would like to
 contribute an RFC or want to participate in the design process, this document
 should help you get started.
 
@@ -27,7 +27,7 @@ report unacceptable behavior to
 
 ## Reporting security vulnerabilities
 
-If you think you have found a security vulnerability in any ToolHive project,
+If you think you have found a security vulnerability in any Stacklok project,
 please DO NOT disclose it publicly until we've had a chance to fix it. Please
 don't report security vulnerabilities using GitHub issues; instead, please
 follow this
@@ -48,8 +48,8 @@ RFC, start a thread first.
 GitHub Issues in this repository are used to track RFC status and any
 meta-discussions about the RFC process itself.
 
-For general usage questions about ToolHive, please ask in
-[ToolHive's discussion forum](https://discord.gg/stacklok).
+For general usage questions about our projects, please ask in
+[our discussion forum](https://discord.gg/stacklok).
 
 ### Not sure how to start contributing?
 
@@ -57,7 +57,7 @@ If you're new to the RFC process:
 
 1. Read through existing RFCs to understand the format and level of detail expected
 2. Start with a thread on [Discord](https://discord.gg/stacklok) to validate your idea
-3. Review the [RFC template](rfcs/0000-template.md) to understand what sections are required
+3. Review the [RFC template](template.md) to understand what sections are required
 
 ### RFC submission process
 
@@ -66,8 +66,9 @@ If you're new to the RFC process:
 
 2. **Fork and create your RFC**:
    - Fork this repository to your own GitHub account
-   - Copy `rfcs/0000-template.md` to `rfcs/THV-XXXX-descriptive-name.md`
-   - Use the next available RFC number (check existing RFCs)
+   - Copy `template.md` to `<project>/<PREFIX>-XXXX-descriptive-name.md`
+     (e.g. `toolhive/THV-XXXX-descriptive-name.md`)
+   - Keep `XXXX` as a placeholder while drafting, then rename the file to your PR number once the PR is open
    - Fill in all required sections of the template
 
 3. **Submit a Pull Request**:
@@ -92,17 +93,19 @@ If you're new to the RFC process:
 All RFC files must follow this naming pattern:
 
 ```
-THV-{NUMBER}-{descriptive-name}.md
+{project}/{PREFIX}-{NUMBER}-{descriptive-name}.md
 ```
 
 Where:
+- `{project}` is the project folder (e.g. `toolhive`)
+- `{PREFIX}` is that project's prefix (e.g. `THV`), listed in the [README](README.md#projects)
 - `{NUMBER}` is a four-digit sequential number that must be equal to the PR number (e.g., 0001, 0002)
 - `{descriptive-name}` is a short description in kebab-case
 
 #### Examples of valid RFC names:
-- `THV-0001-token-exchange-middleware.md`
-- `THV-0002-kubernetes-crd-improvements.md`
-- `THV-0003-registry-api-v2.md`
+- `toolhive/THV-0001-token-exchange-middleware.md`
+- `toolhive/THV-0002-kubernetes-crd-improvements.md`
+- `toolhive/THV-0003-registry-api-v2.md`
 
 A CI job will make sure you're following the right numbering.
 

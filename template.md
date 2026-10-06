@@ -4,7 +4,7 @@
 - **Author(s)**: Your Name (@github-handle)
 - **Created**: YYYY-MM-DD
 - **Last Updated**: YYYY-MM-DD
-- **Target Repository**: toolhive | toolhive-studio | toolhive-registry | toolhive-registry-server | multiple
+- **Target Repository**: the repository this RFC targets (e.g. toolhive, toolhive-studio, toolhive-registry-server) | multiple
 - **Related Issues**: [toolhive#1234](https://github.com/stacklok/toolhive/issues/1234) (if applicable)
 
 ## Summary
@@ -65,7 +65,7 @@ Document any API changes, including:
 - Deprecated functionality
 
 ```go
-// Example API change
+// Example API change (use the language of the target repository)
 type NewInterface interface {
     Method(ctx context.Context, param string) (Result, error)
 }
@@ -88,7 +88,7 @@ Describe any changes to data models, schemas, or storage.
 
 ## Security Considerations
 
-**This section is required.** Security is a core concern for ToolHive. Address the following:
+**This section is required.** Security is a core concern for every project in this repository. Address the following:
 
 ### Threat Model
 

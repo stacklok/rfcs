@@ -1,6 +1,6 @@
 ---
 name: respond-to-rfc-comments
-description: Help respond to review comments on an RFC pull request. Use when the user wants to address, reply to, or resolve feedback on an open RFC PR for toolhive, toolhive-studio, toolhive-registry, toolhive-registry-server, toolhive-cloud-ui, or dockyard projects.
+description: Help respond to review comments on an RFC pull request. Use when the user wants to address, reply to, or resolve feedback on an open RFC PR for any project in this repository (toolhive, mecatl, ...), including the toolhive, toolhive-studio, toolhive-registry, toolhive-registry-server, toolhive-cloud-ui, or dockyard repositories.
 allowed-tools: Read, Glob, Grep, Bash(git:*), mcp__github__*, mcp__fetch__fetch, WebFetch, Edit, Write, AskUserQuestion
 ---
 
@@ -24,7 +24,7 @@ Gather all review feedback from the PR:
 
 ### Step 2: Read the RFC
 
-Read the full RFC document so you have context for every comment.
+Read the full RFC document so you have context for every comment. Also read the root `AGENTS.md` and the `AGENTS.md` in the RFC's project folder, so proposed changes follow the project's conventions.
 
 ### Step 3: Present Comments One at a Time
 
@@ -85,7 +85,7 @@ After replies are posted, ask the user if they want to commit and push. If confi
 - When renaming fields or terms, use `replace_all` to catch every occurrence.
 - When adding new sections, match the style of existing sections in the RFC.
 - When adding sections required by the template (e.g., Security Considerations), reference existing RFCs in the repo for structural patterns:
-  - Search for the section name across `rfcs/THV-*.md` files.
+  - Search for the section name across `<project>/<PREFIX>-*.md` files.
   - Use 2-3 examples to match the established format (threat model tables, subsection structure, etc.).
 
 ### PR-Level Comment Responses
