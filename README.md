@@ -27,14 +27,14 @@ You probably **don't** need an RFC for:
 
 ## Projects
 
-Each project has its own folder, filename prefix and README describing its scope.
+Each project has its own folder, filename prefix and `AGENTS.md` describing its scope, repositories and conventions. Because most RFCs are drafted with AI assistance, that file is where project guidelines live: AI tools read it automatically, and it is just as readable by people.
 
 | Project | Folder | Prefix |
 |---------|--------|--------|
-| ToolHive ecosystem | [`toolhive/`](toolhive/) | `THV-` |
-| Mecatl | [`mecatl/`](mecatl/) | `MEC-` |
+| ToolHive ecosystem | [`toolhive/`](toolhive/AGENTS.md) | `THV-` |
+| Mecatl | [`mecatl/`](mecatl/AGENTS.md) | `MEC-` |
 
-To onboard a new project, create `<project>/README.md`, pick a short prefix, and register the folder and prefix in the `PREFIXES` map in `.github/workflows/validate-proposal-naming.yml`.
+To onboard a new project, see [Adding a project](AGENTS.md#adding-a-project) in the root `AGENTS.md`.
 
 ## RFC Process
 
@@ -85,9 +85,10 @@ For RFCs that originate from issues in specific repositories, you may reference 
 rfcs/
 ├── README.md                    # This file
 ├── CONTRIBUTING.md              # Contribution guidelines
+├── AGENTS.md                    # Shared rules for AI assistants and authors
 ├── template.md                  # RFC template shared by all projects
 ├── toolhive/                    # One folder per project
-│   ├── README.md                # Project scope and related repositories
+│   ├── AGENTS.md                # Project scope, repositories and conventions
 │   └── THV-XXXX-*.md            # RFCs, prefixed per project
 └── assets/                      # Images and diagrams for RFCs
     └── XXXX/                    # Assets for RFC XXXX

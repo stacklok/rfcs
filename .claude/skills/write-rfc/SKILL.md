@@ -1,76 +1,40 @@
 ---
 name: write-rfc
-description: Write RFCs for the ToolHive ecosystem. Use when the user wants to create a new RFC, proposal, or design document for toolhive, toolhive-studio, toolhive-registry, toolhive-registry-server, toolhive-cloud-ui, or dockyard projects.
+description: Write RFCs for any project in this repository (toolhive, mecatl, ...). Use when the user wants to create a new RFC, proposal, or design document for a project covered here, including the toolhive, toolhive-studio, toolhive-registry, toolhive-registry-server, toolhive-cloud-ui, or dockyard repositories.
 allowed-tools: Read, Glob, Grep, Bash(git:*), mcp__github__*, mcp__fetch__fetch, WebFetch, Task, Edit, Write, AskUserQuestion
 ---
 
 # Write RFC Skill
 
-This skill helps you write high-quality RFCs for the ToolHive ecosystem following established patterns and conventions.
+This skill helps you write high-quality RFCs for the projects in this repository following established patterns and conventions.
 
 ## Overview
 
-ToolHive RFCs follow a specific format with the naming convention `THV-{NUMBER}-{descriptive-name}.md`. The NUMBER must match the PR number and be zero-padded to 4 digits.
+RFCs live in one folder per project and are named `<project>/<PREFIX>-{NUMBER}-{descriptive-name}.md`. The NUMBER must match the PR number and be zero-padded to 4 digits. Project-specific knowledge (scope, repositories, architecture docs, conventions) lives in `<project>/AGENTS.md`, not in this skill.
 
 ## Workflow
 
-### Step 1: Gather Requirements
+### Step 1: Identify the Project and Gather Requirements
 
-Before writing an RFC, ask the user about:
+1. Read the root `AGENTS.md`.
+2. Determine the project (folder). If the user hasn't said, ask. Then read `<project>/AGENTS.md`; it defines the prefix, target repositories, architecture docs and conventions.
+
+Then ask the user about:
 
 1. **Problem Statement**: What problem are they trying to solve?
-2. **Target Repository**: Which repo does this affect?
-   - `toolhive` - Core runtime, CLI (`thv`), operator (`thv-operator`), proxy-runner (`thv-proxyrunner`), virtual MCP (`vmcp`)
-   - `toolhive-studio` - Desktop UI application (Electron/TypeScript)
-   - `toolhive-registry` - MCP server registry data
-   - `toolhive-registry-server` - Registry API server (`thv-registry-api`)
-   - `toolhive-cloud-ui` - Cloud/Enterprise web UI (Next.js)
-   - `dockyard` - Container packaging for MCP servers
-   - `multiple` - Cross-cutting changes
+2. **Target Repository**: Which repository does this affect? Offer the list from the project's `AGENTS.md`, plus `multiple` for cross-cutting changes.
 3. **Scope**: What are the goals and explicit non-goals?
 
-### Step 2: Research the Ecosystem
+### Step 2: Research
 
-Before drafting, research the relevant codebase:
+Before drafting:
 
-#### 2.1 Fetch Architectural Documentation
-
-Use `mcp__github__get_file_contents` to read from `stacklok/toolhive` repo's `docs/arch/` directory:
-
-| Document | Content |
-|----------|---------|
-| `00-overview.md` | Platform overview, key components |
-| `01-deployment-modes.md` | Local vs Kubernetes modes |
-| `02-core-concepts.md` | Nouns (Workloads, Transports, Proxy, etc.) and Verbs |
-| `03-transport-architecture.md` | stdio, SSE, streamable-http transports |
-| `04-secrets-management.md` | Secrets handling, providers |
-| `05-runconfig-and-permissions.md` | Configuration format, permission profiles |
-| `06-registry-system.md` | Registry architecture, MCPRegistry CRD |
-| `07-groups.md` | Server grouping concepts |
-| `08-workloads-lifecycle.md` | Lifecycle management |
-| `09-operator-architecture.md` | K8s operator, CRDs |
-| `10-virtual-mcp-architecture.md` | Virtual MCP aggregation |
-
-#### 2.2 Review Existing RFCs
-
-Read `rfcs/` directory in this repository to understand patterns and check for related proposals.
-
-#### 2.3 Search Relevant Codebases
-
-Use `mcp__github__search_code` or `mcp__github__get_file_contents` to explore:
-
-| Repository | Purpose |
-|------------|---------|
-| `stacklok/toolhive` | Core platform, CLI, operator, proxy |
-| `stacklok/toolhive-studio` | Desktop UI |
-| `stacklok/toolhive-registry-server` | Registry API server |
-| `stacklok/toolhive-registry` | Registry data |
-| `stacklok/toolhive-cloud-ui` | Cloud/Enterprise UI |
-| `stacklok/dockyard` | Container packaging |
+1. Read the architecture docs and code locations listed under "Research before writing or reviewing" in the project's `AGENTS.md` (use `mcp__github__get_file_contents` or `mcp__github__search_code`).
+2. Read the existing RFCs in `<project>/` to understand patterns and find related proposals.
 
 ### Step 3: Draft the RFC
 
-Create the RFC following the template structure from `rfcs/0000-template.md`.
+Create the RFC following the template structure from `template.md`.
 
 #### Required Metadata
 
@@ -117,31 +81,14 @@ Every RFC MUST address:
 
 ### Step 4: Use Proper Conventions
 
-#### Code Examples
+Follow the "Conventions" section of the project's `AGENTS.md` (code example languages, API and CRD conventions, terminology). Generally:
 
-- Use **Go** for API changes in toolhive, toolhive-registry-server
-- Use **TypeScript** for toolhive-studio, toolhive-cloud-ui changes
 - Use **YAML** for configuration examples
 - Use **Mermaid** for diagrams (flowcharts, sequence diagrams)
 
-#### Kubernetes CRDs
-
-If the RFC involves Kubernetes, include CRD examples:
-
-```yaml
-apiVersion: toolhive.stacklok.dev/v1alpha1
-kind: MCPServer
-metadata:
-  name: example
-spec:
-  # ...
-```
-
-CRD types: `MCPServer`, `MCPRegistry`, `MCPToolConfig`, `MCPExternalAuthConfig`, `MCPGroup`, `VirtualMCPServer`
-
 ### Step 5: File Naming
 
-The RFC file should be named `THV-XXXX-{descriptive-name}.md` where XXXX is the PR number. Since you don't know the PR number yet, use a placeholder like `THV-XXXX-{name}.md` and remind the user to rename it to match the PR number after creating the PR.
+Name the file `<project>/<PREFIX>-XXXX-{descriptive-name}.md`, where `<PREFIX>` comes from the project's `AGENTS.md` and XXXX is the PR number. Since you don't know the PR number yet, use the `XXXX` placeholder and remind the user to rename the file to match the PR number after creating the PR.
 
 ### Step 6: Review Checklist
 
@@ -155,46 +102,13 @@ Before finalizing, verify:
 - [ ] Code examples are concrete and in the correct language
 - [ ] Implementation phases are defined
 - [ ] Testing strategy covers all levels
-- [ ] File follows naming convention
-
-## ToolHive Architecture Summary
-
-### Platform Overview
-
-ToolHive is a **platform** for MCP server management (not just a container runner):
-
-- **Proxy layer** with middleware (auth, authz, audit, rate limiting)
-- **Security** by default (network isolation, permission profiles)
-- **Aggregation** via Virtual MCP Server
-- **Registry** for curated MCP servers
-- **Multi-deployment**: Local (CLI/UI) and Kubernetes (operator)
-
-### Key Binaries
-
-| Binary | Location | Purpose |
-|--------|----------|---------|
-| `thv` | toolhive | Main CLI |
-| `thv-operator` | toolhive | Kubernetes operator |
-| `thv-proxyrunner` | toolhive | K8s proxy container |
-| `vmcp` | toolhive | Virtual MCP server (aggregation) |
-| `thv-registry-api` | toolhive-registry-server | Registry API server |
-
-### Transport Types
-
-- **stdio** - Standard input/output (requires protocol translation)
-- **SSE** - Server-Sent Events (HTTP, transparent proxy)
-- **streamable-http** - HTTP streaming (transparent proxy)
-
-### Design Principles
-
-1. Platform abstraction over direct execution
-2. Security by default (network isolation, permissions)
-3. Extensibility through middleware
-4. Cloud-native (K8s operators, containers)
-5. RunConfig as portable API contract
+- [ ] File is in the project folder and follows the naming convention
+- [ ] Project-specific conventions from `<project>/AGENTS.md` are followed
 
 ## Reference Files
 
-- Template: `rfcs/0000-template.md`
+- Shared rules: `AGENTS.md`
+- Project rules: `<project>/AGENTS.md`
+- Template: `template.md`
 - Contributing guide: `CONTRIBUTING.md`
-- Existing RFCs: `rfcs/THV-*.md`
+- Existing RFCs: `<project>/*.md`
