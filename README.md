@@ -32,6 +32,7 @@ Each project has its own folder, filename prefix and README describing its scope
 | Project | Folder | Prefix |
 |---------|--------|--------|
 | ToolHive ecosystem | [`toolhive/`](toolhive/) | `THV-` |
+| Mecatl | [`mecatl/`](mecatl/) | `MEC-` |
 
 To onboard a new project, create `<project>/README.md`, pick a short prefix, and register the folder and prefix in the `PREFIXES` map in `.github/workflows/validate-proposal-naming.yml`.
 

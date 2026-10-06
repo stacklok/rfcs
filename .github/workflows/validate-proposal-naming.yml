@@ -40,6 +40,7 @@ jobs:
           # Map of project folder -> RFC filename prefix. Add a line here when onboarding a new project.
           declare -A PREFIXES=(
             [toolhive]="THV"
+            [mecatl]="MEC"
           )
 
           # Get the list of NEW files added in a project folder (not modifications to existing files).
